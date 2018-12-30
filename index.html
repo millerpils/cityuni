@@ -20,7 +20,7 @@
       img {
         margin: 10px;
       }
-      
+
       .lazyload,
       .lazyloading {
         opacity: 0;
@@ -59,7 +59,7 @@
   
         // check the status beforehand
         if ( request.status >= 200 && request.status < 400 ) {
-          // limit to 200
+          // limit display to 200
           for (var i = 0; i < 200; i++) {
             var photo = document.createElement('img');
             photo.setAttribute("class", "photos__photo lazyload");

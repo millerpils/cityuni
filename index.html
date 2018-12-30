@@ -17,11 +17,11 @@
       .lazyload,
       .lazyloading {
         opacity: 0;
-        transition: opacity 400ms;
       }
  
-      img.lazyloaded {
-          opacity: 1;
+      .lazyloaded {
+        opacity: 1;
+        transition: opacity 400ms;
       }
     </style>
   </head>
@@ -48,6 +48,7 @@
       request.onload = function() {
         var jsonObj = request.response;
 
+        // limit to 200 photos 
         if (request.status >= 200 && request.status < 400) {
           for (var i = 0; i < 200; i++) {
             var photo = document.createElement('img');

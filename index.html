@@ -3,14 +3,19 @@
   <head>
     <meta charset="utf-8">
     <title>London City University - Photos</title>
+    <!-- lightweight CSS so inlining -->
     <style>
       img {
         margin: 10px;
       }
 
-      .container {
+      #root {
         max-width: 1200px;
-        margin: 50px auto 0 auto;
+        margin: 0 auto;
+      }
+
+      .container {
+        margin-top: 50px;
         text-align: center;
       }
 
@@ -27,8 +32,10 @@
   </head>
   <body>
 
-    <div class="container">
-      <div id="photos"></div>
+    <div id="root">
+      <div class="container">
+        <div id="photos"></div>
+      </div>
     </div>
 
     <script>
@@ -46,20 +53,27 @@
       
       // process the response
       request.onload = function() {
-        var jsonObj = request.response;
 
-        // limit to 200 photos 
-        if (request.status >= 200 && request.status < 400) {
+        // assign the json object to a var
+        var jsonObj = request.response;
+  
+        // check the status beforehand
+        if ( request.status >= 200 && request.status < 400 ) {
+          // limit to 200
           for (var i = 0; i < 200; i++) {
             var photo = document.createElement('img');
             photo.setAttribute("class", "photos__photo lazyload");
+            photo.setAttribute("id", jsonObj[i].id);
             photo.setAttribute("data-src", jsonObj[i].thumbnailUrl);
+            photo.setAttribute("title", jsonObj[i].title);
             document.getElementById("photos").appendChild(photo);
           }
         } else {
+          // show simple error if 404
           var errorMessage = document.createElement('h1');
           errorMessage.textContent = "There's been a problem :(";
-          document.getElementById("photos").appendChild(errorMessage);
+          var root = document.getElementsByClassName("container");
+          c[0].appendChild(errorMessage);
         }
       }
     </script>

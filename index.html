@@ -1,10 +1,8 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <!-- :) -->
-    <link rel="shortcut icon" href="https://www.city.ac.uk/__data/assets/git_bridge/0018/344007/main/i/favicon.ico" type="image/x-icon">
-    <title>London City University - Photos</title>
+    <meta charset="utf-8" />
+    <title>Infinite Photos</title>
     <!-- lightweight CSS so inlining -->
     <style>
       #root {
@@ -25,7 +23,7 @@
       .lazyloading {
         opacity: 0;
       }
- 
+
       .lazyloaded {
         opacity: 1;
         transition: opacity 400ms;
@@ -39,42 +37,26 @@
       </div>
     </div>
     <script>
-      // create a request variable and assign a new XMLHttpRequest object to it
-      var request = new XMLHttpRequest();
-
-      // specify expected response type
-      request.responseType = 'json';
-
-      // open a new async connection, using the GET request on the URL endpoint
-      request.open('GET', 'https://jsonplaceholder.typicode.com/photos', true);
-
-      // send the request
-      request.send();
-      
-      // process the response
-      request.onload = function() {
-
-        // assign the json object to a var
-        var jsonObj = request.response;
-  
-        // check the status beforehand
-        if ( request.status >= 200 && request.status < 400 ) {
-          // limit display to 200
+      fetch("https://jsonplaceholder.typicode.com/photos")
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Invalid or no network response.");
+          }
+          return response.json();
+        })
+        .then((jsonObj) => {
           for (var i = 0; i < 200; i++) {
-            var photo = document.createElement('img');
+            var photo = document.createElement("img");
             photo.setAttribute("class", "photos__photo lazyload");
             photo.setAttribute("id", jsonObj[i].id);
             photo.setAttribute("data-src", jsonObj[i].thumbnailUrl);
             photo.setAttribute("title", jsonObj[i].title);
             document.getElementById("photos").appendChild(photo);
           }
-        } else {
-          // show simple error if 404, server error, etc
-          var errorMessage = document.createElement('h1');
-          errorMessage.textContent = "There's been a problem :(";
-          document.getElementById("root").appendChild(errorMessage);
-        }
-      }
+        })
+        .catch((err) => {
+          console.error("There has been a problem.", err);
+        });
     </script>
     <script src="lazysizes.min.js"></script>
   </body>

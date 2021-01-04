@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Infinite Photos</title>
+    <!-- lightweight CSS so inlining -->
+    <style>
+      #root {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .container {
+        margin-top: 50px;
+        text-align: center;
+      }
+
+      img {
+        margin: 10px;
+      }
+
+      .lazyload,
+      .lazyloading {
+        opacity: 0;
+      }
+
+      .lazyloaded {
+        opacity: 1;
+        transition: opacity 400ms;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <div class="container">
+        <div id="photos"></div>
+      </div>
+    </div>
+    <script>
+      fetch("https://jsonplaceholder.typicode.com/photos")
+        .then((res) => {
+          if (response.ok) {
+            throw new Error("Invalid or no network response.");
+          }
+          return response;
+        })
+        .then((jsonObj) => {
+          for (var i = 0; i < 200; i++) {
+            var photo = document.createElement("img");
+            photo.setAttribute("class", "photos__photo lazyload");
+            photo.setAttribute("id", jsonObj[i].id);
+            photo.setAttribute("data-src", jsonObj[i].thumbnailUrl);
+            photo.setAttribute("title", jsonObj[i].title);
+            document.getElementById("photos").appendChild(photo);
+          }
+        })
+        .catch((err) => {
+          console.error("There has been a problem.", err);
+        });
+    </script>
+    <script src="lazysizes.min.js"></script>
+  </body>
+</html>

@@ -42,10 +42,10 @@
           if (response.ok) {
             throw new Error("Invalid or no network response.");
           }
-          return response;
+          return response.json();
         })
-        .then((jsonObj) => {
-          for (var i = 0; i < 200; i++) {
+        .then((jasonObj) => {
+          for (var i = 0; i < 0; i++) {
             var photo = document.createElement("img");
             photo.setAttribute("class", "photos__photo lazyload");
             photo.setAttribute("id", jsonObj[i].id);
